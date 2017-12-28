@@ -1,0 +1,66 @@
+<!-- NOTE: @see ngClick for how to pass data selection to outside expression -->
+<!-- <span>111</span> -->
+
+
+<md-list ng-if="$ctrl.tasks && $ctrl.tasks.length>0">
+  <md-list-item ng-repeat="task in $ctrl.tasks">
+    <div class="list-item">
+      <div class="item-name-time">
+        <h2 class="name">{{task.name}}</h2>
+        <label class="time">{{task.timeToDo}}</label>
+      </div>
+      <div class="option">
+        <!-- <md-checkbox ng-model="task.status" class="task-status" ng-click="$ctrl.finished(task)" aria-label="Finished?"></md-checkbox> -->
+        <md-button ng-click="$ctrl.showfinishTask(task)" class="finish" ng-class="{'selected' : user === $ctrl.selected }" ng-disabled="task.status">
+          <md-icon md-svg-icon="{{task.status?'CheckBox1':'CheckBox0'}}" class="delete"></md-icon>
+        </md-button>
+        <md-button ng-click="$ctrl.showDialog(task)" class="delete" ng-class="{'selected' : user === $ctrl.selected }">
+          <md-icon md-svg-icon="delete" class="delete"></md-icon>
+        </md-button>
+      </div>
+    </div>
+  </md-list-item>
+</md-list>
+<div class="dialog" ng-if="$ctrl.finishisshow">
+  <div id="delete">
+        <md-dialog #dialog="mdDialog" md-component-id='addform'>
+            <h2>Finish Task</h2>
+            <form>
+              <p>
+                Are you sure finish this task?
+              </p>
+              <div class="buttons">
+                  <md-button ng-click="$ctrl.closeFinishDialog()" class="dialog-btn cancle">
+                      cancel
+                    </md-button>
+                    <md-button ng-click="$ctrl.finishTask()" class="dialog-btn sure">
+                      sure
+                    </md-button>
+              </div>
+              
+            </form>
+          </md-dialog>
+    </div>
+</div>
+<div class="dialog" ng-if="$ctrl.deleteisshow">
+    <div id="delete">
+          <md-dialog #dialog="mdDialog" md-component-id='addform'>
+              <h2>Delete Task</h2>
+              <form>
+                <p>
+                  Are you sure delete this task?
+                </p>
+                <div class="buttons">
+                    <md-button ng-click="$ctrl.closeDialog()" class="dialog-btn cancle">
+                        cancel
+                      </md-button>
+                      <md-button ng-click="$ctrl.remove()" class="dialog-btn sure">
+                        sure
+                      </md-button>
+                </div>
+                
+              </form>
+            </md-dialog>
+      </div>
+</div>
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <title>Angular Material - Starter App</title>
+  <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+  <link rel="stylesheet" href="./jspm_packages/github/angular/bower-material@master/angular-material.css" />
+  <link rel="stylesheet" href="./assets/app.css" />
+</head>
+
+<body ng-cloak layout="column" ng-controller="AppController as app">
+  <div class="toolbar-tools">
+    <div class="header-user" ng-click="app.showProfile()">
+      <img src="./assets/person.png" />
+      <span>{{app.profile.userName}}</span>
+    </div>
+    <!-- <h1>TODO.me</h1> -->
+  </div>
+  <div class="time-now">
+      <h3 ng-if="app.taskpage">{{app.timeNow}}</h3>
+      <h3 ng-if="!app.taskpage">
+        <md-icon md-svg-icon="left" class="left-arrow" ng-click="app.back()"></md-icon>
+        Profile
+      </h3>
+  </div>
+  <div class="task-content" ng-if="app.taskpage">
+    <!-- Container #2 -->
+    <div flex layout="row">
+
+      <!-- Container #4 -->
+      <md-content flex id="content">
+        <tasks-list tasks="app.tasks">
+        </tasks-list>
+      </md-content>
+      <md-button class="md-fab md-fab-bottom-right" ng-click="app.showDialog()" aria-label="Plus">
+        <md-icon md-svg-icon="plus"></md-icon>
+      </md-button>
+    </div>
+
+    <div id="taskadd" ng-if="app.taskaddisshow">
+
+      <md-dialog #dialog="mdDialog" md-component-id='addform'>
+        <h2>New Task</h2>
+        <form>
+          <md-input-container>
+            <label for="taskname">Task name</label>
+            <input id="taskname" ng-model="app.addname" type="text" md-autofocus>
+          </md-input-container>
+
+          <div class="datetime">
+            <md-input-container flex-gt-md="200" class="date-check">
+              <label for="dateTime">Date</label>
+              <md-datepicker ng-model="app.adddateTime" placeholder="Enter date" md-min-date="app.adddateTime" md-max-date="" ng-readonly="true"></md-datepicker>
+            </md-input-container>
+            <md-input-container class="time-check">
+              <label for="dateTime">Time</label>
+              <input id="time" ng-model="app.addtime" type="number" md-autofocus min="0" max="23">
+            </md-input-container>
+          </div>
+          <div class="buttons">
+              <md-button ng-click="app.closeDialog()" class="dialog-btn cancle">
+                  cancel
+                </md-button>
+                <md-button ng-click="app.addTask(app.addname, app.adddateTime, app.addtime)" class="dialog-btn sure">
+                  save
+                </md-button>
+          </div>
+          
+        </form>
+      </md-dialog>
+    </div>
+
+  </div>
+
+  <div class="profile" ng-if="!app.taskpage">
+    <div flex layout="row">
+      <!-- Container #4 -->
+      <md-content flex id="profile-content">
+        <form>
+          <md-input-container>
+            <label for="username">Name</label>
+            <input id="username" ng-model="app.profile.userName" type="text" md-autofocus>
+          </md-input-container>
+          <md-input-container>
+            <label for="email">Email</label>
+            <input id="email" ng-model="app.profile.email" type="email" md-autofocus>
+          </md-input-container>
+          <div></div>
+          <md-button ng-click="app.saveProfile(app.profile.userName, app.profile.email)" class="profile-save-btn save">
+            save
+          </md-button>
+        </form>
+      </md-content>
+    </div>
+  </div>
+
+  <script src="./jspm_packages/system.js" type="text/javascript"></script>
+  <script src="config.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    System
+      .import('src/boot/boot')
+      .catch(console.error.bind(console)); // make sure any errors print to console
+  </script>
+
+</body>
+
+</html>
